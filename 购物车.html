@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        .div{
+            width: 500px;
+            height: 100px;
+            margin-bottom: 10px;
+            background: skyblue;
+        }
+        input{
+            width: 25px;
+            float: left;
+            text-align: center;
+        }
+        p span{
+            float: left;
+            width: 40px;
+            height: 18px;
+            border: 1px solid white;
+            text-align: center;
+            line-height: 18px;
+        }
+        img{
+            float: left;
+            width: 100px;
+            height: 100px;
+        }
+        .p{
+            float:right;
+        }
+    </style>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+    <div id="module">
+        <div v-for="(a,index) in goods" class="div">
+            <p><img v-bind:src="a.tu"/></p>
+            <p>商品：{{a.name}}</p>
+            <p>价格：${{a.skill}}</p>
+            <p><input @click="edd(a.num,index)" type="button" value="-"/><input type="text" v-bind:value="a.num" @input="bdd(a.num,index)"></input><input @click="add(a.num,index)" type="button" value="+" /></p><br />
+            <p class="p">总价：${{a.total}}</p>
+        </div>
+    </div>
+    <script>
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                goods: [{
+                        tu:'img/0.jpg',
+                        name: '假发',
+                        skill: '112.00',
+                        num:1,
+                        total:'112.00'
+                    }, {
+                        tu:'img/1.jpg',
+                        name: '生发洗发水',
+                        skill: '26.00',
+                        num:2,
+                        total:'26.00'
+                    }, {
+                        tu:'img/2.jpg',
+                        name: '按摩生发之按摩手法',
+                        skill: '69.00',
+                        num:3,
+                        total:'69.00'
+                }]
+            },
+            methods:{
+                add(num,index){
+                    this.goods[index].num += 1;
+                    this.goods[index].total = this.goods[index].num * this.goods[index].skill+'.00';
+                },
+                edd(num,index){
+                    this.goods[index].num -= 1;
+                    this.goods[index].total = this.goods[index].num * this.goods[index].skill+'.00';
+                },
+                bdd(num,index){
+                    console.log(num);
+                    console.log(index);
+                    this.goods[index].num=num;
+                    this.goods[index].total = this.goods[index].num * this.goods[index].skill+'.00';
+                }
+            },
+            computed: {
+            }
+        })
+    </script>
+</body>
+</html>

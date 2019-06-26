@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        i{
+            font-style:normal;
+            margin-right:20px; 
+        }
+        span{
+            margin-right:20px;
+            display: inline-block;
+            width: 100px; 
+        }
+    </style>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+    <div id="module">
+        <input type="text" v-model="title" /><input type="button" value="添加" @click="add"/>
+        <p>正在进行</p>
+        <p v-for="(item,index) in unfinished">
+            <i>{{index+1}}</i>
+            <span>{{item.title}}</span>
+            <span>{{item.achieve?'是':'否'}}</span>
+            <input type="button" value="完成" @click="complete(item.id)"><input type="button" value="删除" @click="cancel(item.id)">
+        </p>
+        <p>已经完成</p>
+        <p v-for="(item,index) in achievelist">
+            <i>{{index+1}}</i>
+            <span>{{item.title}}</span>
+            <span>{{item.achieve?'是':'否'}}</span>
+            <input type="button" value="查看"><input type="button" value="删除" @click="cancel(item.id)">
+        </p>
+    </div>
+    <script>
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                goods:[],
+                title:'',
+            },
+            //*zm*
+            computed:{
+                achievelist(){
+                    return this.goods.filter(item=>item.achieve)
+                },
+                unfinished(){
+                    return this.goods.filter(item=>!item.achieve)
+                }
+            },
+            methods:{
+                add(e){
+                    let {date,title} = this;
+                    let data = {
+                        id:Date.now(),
+                        title,
+                        achieve:false,
+                    }
+                    this.goods.unshift(data);
+                    this.title = '';
+                    // this.$refs.title.focus();
+                },
+                complete(id){
+                    this.goods.forEach(item=>{
+                        if(item.id == id){
+                            item.achieve = true;
+                        }
+                    })
+                },
+                cancel(id){
+                    for(let i=0;i<this.goods.length;i++){
+                        if(this.goods[i].id == id){
+                            this.goods.splice(i,1);
+                            break;
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

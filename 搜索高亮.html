@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+    <div id="module">
+        <input v-model="abc"/>
+        <p v-for="message in abc"><span style="color: red"></span></p>
+        <p v-html="pan()"></p>
+    </div>
+    <div id="express">
+        <input type="text" v-model="back">
+        <p v-html="pen()">{{message}}</p>
+    </div>
+    <script>
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                abc:'',
+                message: 'abcdefghijklmabcdefghi',
+            },
+            methods:{
+                    pan(){
+                        let reg = new RegExp(this.abc,'g');
+						return this.message.replace(reg,`<span style="color:red">${this.abc}</span>`); 
+                    }
+                }
+        })
+        let mv = new Vue({
+            el:'#express',
+            data:{
+                back:'下一个',
+                message:'轮到你了'
+            },
+            methods:{
+                pen(){
+                    let res = new RegExp(this.back,'g');
+                    return this.message.replace(res,`<span style="color:red">${this.back}</span>`)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

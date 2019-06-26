@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input{
+            width: 50px;
+        }
+        p{
+            width: 158px;
+            height: 150px;
+            background: yellow;
+        }
+        .abc{
+            color:seagreen;
+        }
+        .bac{
+            color: blue;
+        }
+    </style>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+    <div id="module">
+        <input @click="one(abc)" type="button" value="1"/>
+        <input @click="two(abc,bac)" type="button" value="2">
+        <input @click="senven(abc,bac)" type="button" value="3">
+        <p v-if="abc" :class="{abc}">这是第一个区块</p>
+        <p v-else-if="bac" :class="{bac}">这是第二个区块</p>
+        <p v-else :style="{color}">这是第三个区块</p>
+    </div>
+    <script>
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                abc: true,
+                bac: false,
+                color:'red',
+            },
+            methods:{
+                    one(abc){
+                        this.abc=true;
+                    },
+                    two(abc,bac){
+                        this.abc=false;
+                        this.bac= true;
+                    },
+                    senven(abc,bac){
+                        this.abc=false;
+                        this.bac=false;
+                    }
+                }
+        })
+    </script>
+</body>
+</html>
