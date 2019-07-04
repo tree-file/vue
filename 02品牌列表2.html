@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+    <div id="module">
+         
+         <div class="panel panel-primary">
+               <div class="panel-heading">
+                     <h3 class="panel-title">添加品牌</h3>
+               </div>
+               <div class="panel-body form-inline">
+                     <label>
+                         Id:
+                         <input type="text" class="form-control" v-model="id">
+                      </label>
+                     <label>
+                        Name:
+                        <input type="text" class="form-control" v-model="name" @keyup.f2="add">
+                    </label>
+                        <input type="button" value="添加" class="btn btn-primary" @click="add()">
+                    <label>
+                            搜索关键字:
+                            <input type="text" class="form-control" v-model="keyworlds" v-focus v-color="'skyblue'">
+                    </label>
+               </div>
+         </div>
+         
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keyworlds)" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td v-text="item.name"></td>
+                    <td>{{item.ctime | dateFormat}}</td>
+                    <td><a href="" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+    <div id="module2">
+        <h3  v-color="'pink'" v-fontweight="900" v-fontsize="30">{{dt |dateFormat}}</h3>
+    </div>
+    <script>
+        Vue.config.keyCodes.f2 = 113;
+        Vue.directive('focus',{
+            // bind:function(el){ //每当指令绑定元素上的时候，会立即执行这个 bind 函数，只执行一次
+            //     el.focus()
+            // },
+            inserted:function(el){  //inserted 表示元素 插入DOM中的时候，会立即执行inserted 函数
+                el.focus()
+            },
+            // updated:function(){ //当vnode更新的时候，可能会触发多次
+
+            // }
+        })
+        Vue.directive('color',{
+            bind:function(el,binding){
+                el.style.color = binding.value;
+            }
+        })
+
+        Vue.filter('dateFormat',function(DateStr,pattern=""){
+            var dt = new Date(DateStr)
+            var y = dt.getFullYear()
+            var m = dt.getMonth() + 1
+            var d = dt.getDate()
+
+            // return `${y}-${m}-${d}`
+
+
+            if(pattern.toLowerCase() === 'yyyy-mm-dd'){
+                return `${y}-${m}-${d}`
+            }else{
+                var hh = dt.getHours()
+                var mm = dt.getMinutes()
+                var ss = dt.getSeconds()
+
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+        })
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                id:'',
+                name:'',
+                keyworlds:'',
+                list:[
+                    {id:1,name:"奔驰",ctime:new Date()},
+                    {id:2,name:"宝马",ctime:new Date()},
+                ]
+            },
+            methods:{
+                add(){
+                    var car = {id:this.id,name:this.name,ctime:new Date()}
+                    this.list.push(car),
+                    this.id = this.name = ''
+                },
+                del(id){
+                    // this.list.some((item,i)=>{
+                    //     if(item.id == id){
+                    //         this.list.splice(i,1);
+                    //         return true;
+                    //     }
+                    // })
+                    var index = this.list.findIndex(item=>{
+                        if(item.id == id){
+                            return true;
+                        }
+                    })
+                    // console.log(index)
+                    this.list.splice(index,1)
+                },
+                search(keyworlds){
+                //     var newList = [];
+                //     this.list.forEach(item => {
+                //         if(item.name.indexOf(keyworlds) !=-1){
+                //             newList.push(item)
+                //         }
+                //     })
+                //     return newList;
+                // }
+
+                return this.list.filter(item =>{
+                    if(item.name.includes(keyworlds)){
+                        return item;
+                       }
+                    })
+
+                }
+            }
+        });
+
+        // Vue.filter('过滤器的名词',function(data){
+        //     return data + '123'
+        // })
+        var mode2 = new Vue ({
+            el:'#module2',
+            data:{
+                dt:new Date()
+            },
+            methods:{},
+            filters:{
+                dateFormat:function(DateStr,pattern=""){
+                    var dt = new Date(DateStr)
+                    var y = dt.getFullYear()
+                    var m = (dt.getMonth() + 1).toString().padStart(2,'0')
+                    var d = dt.getDate().toString().padStart(2,'0')
+
+                    // return `${y}-${m}-${d}`
+
+
+            if(pattern.toLowerCase() === 'yyyy-mm-dd'){
+                return `${y}-${m}-${d}`
+            }else{
+                var hh = dt.getHours().toString().padStart(2,'0')
+                var mm = dt.getMinutes().toString().padStart(2,'0')
+                var ss = dt.getSeconds().toString().padStart(2,'0')
+
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+                }
+            },
+            directives:{
+            'fontweight' : {
+                 bind:function(el,binding){
+                    el.style.fontweight = binding.value
+                    }
+                },
+                'fontsize':function(el,binding){
+                    el.style.fontSize = parseInt(binding.value)+ 'px'
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>
+
+

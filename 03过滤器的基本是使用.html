@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+    <div id="module">
+        <p>{{msg | msgFormat('疯狂','魔怔') |test}}</p>
+    </div>
+    <script>
+
+        Vue.filter('msgFormat',function(msg,arg,arg2){
+            return  msg.replace(/爱/g,arg+arg2)
+        })
+        Vue.filter('test',function(msg){
+            return msg + '@@@@@@'
+        })
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                msg:'爱不爱你心里没点数吗'
+            },
+            methods:{
+            }
+        })
+    </script>
+</body>
+</html>
