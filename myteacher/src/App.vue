@@ -1,27 +1,72 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <tututu/>
+    <el-menu
+      :default-active="active"
+      class="el-menu-demo"
+      mode="horizontal"
+      active-text-color="skyblue"
+      @select="handleSelect"
+      router
+    >
+      <el-menu-item v-for="item in pages" :key="item.name" :index="item.path">
+        
+        {{item.title}}
+        </el-menu-item>
+    
+    </el-menu>
+    <!-- 路由配置匹配后，渲染对应的组件到router-view -->
+    <router-view/>
   </div>
 </template>
 
 <script>
-import vvv from './components/aaa.vue';
+import Vue from 'vue';
+import {Menu,MenuItem} from 'element-ui';
+Vue.use(Menu);
+Vue.use(MenuItem);
 export default {
   name: 'app',
-  components: {
-   tututu:vvv,
+  data(){
+    return {
+      pages:[
+        {
+          title:'首页',
+          path:'/home',
+          name:'Home'
+        }, {
+          title:'发现',
+          path:'/discover',
+          name:'Discover'
+        }, {
+          title:'购物车',
+          path:'/cart',
+          name:'cart'
+        }, {
+          title:'我的',
+          path:'/mine',
+          name:'Mine'
+        }
+      ],
+      active:"/home"
+    };
+  },
+  methods: {
+    handleSelect(index,indexPaht){
+      console.log(index,indexPaht);
+      this.active = index
+    }
+  },
+  created(){
+    let hash = window.location.hash;
+    this.active = hash;
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.active {
+  font-weight: bold;
+  color: #f00
 }
+
 </style>
