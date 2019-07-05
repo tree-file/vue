@@ -101,7 +101,7 @@ export default {
 <style>
 .active {
   font-weight: bold;
-  color: rgb(55, 0, 255)
+  color: rgb(0, 55, 28)
 }
 .login {
   text-align:right;line-height:60px;
