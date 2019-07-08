@@ -15,9 +15,9 @@ import  Mine from '../pages/Mine.vue';
 import Login from '../pages/Login.vue';
 import Reg from '../pages/Reg.vue';
 
+import axios from 'axios';
 
-
-
+Vue.prototype.$axios = axios;
 let Phone = {
     template:`<div>手机</div>`
 }

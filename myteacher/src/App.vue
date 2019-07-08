@@ -105,6 +105,5 @@ export default {
 }
 .login {
   text-align:right;line-height:60px;
-  a{margin-right:10px};
 }
 </style>

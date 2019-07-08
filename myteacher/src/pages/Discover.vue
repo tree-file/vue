@@ -5,7 +5,7 @@
         :default-active="active"
         @select="handleSelect"
       >
-        <el-menu-item :index="item.path" v-for="item in cat" :key="item.name" @click="goto(item)">
+        <el-menu-item :index="item.path" v-for="item in cat" :key="item.name" @click="good(item)">
           <i :class="item.icon"></i>
           <span slot="title">{{item.title}}</span>
         </el-menu-item>
@@ -53,8 +53,8 @@ export default {
     handleSelect(index,indexPath){
       this.active = index
     },
-    goto(item){
-      console.log('name:',item.path)
+    good(item){
+      console.log('name:',item.name)
       this.$router.push({name:item.name})
     }
   },
