@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+</head>
+<body>
+    <div id="module">
+        
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id"> 
+                <span class="badge">评论人：{{item.user}}</span>
+                {{item.content}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var mode = new Vue({
+            el:'#module',
+            data:{
+                list:[{
+                    id:Date.now(),user:'李白',content:'天生我材必有用'
+                },
+                {
+                    id:Date.now(),user:'杜甫',content:'两个黄鹂鸣翠柳'
+                },
+                {
+                    id:Date.now(),user:'汪伦',content:'桃花潭水深千尺'
+                }]
+            },
+            methods:{
+            }
+        })
+    </script>
+</body>
+</html>
